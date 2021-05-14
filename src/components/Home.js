@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Skeleton from '@material-ui/lab/Skeleton';
 import Backdrop from '@material-ui/core/Backdrop';
 import {get} from '../utils/service'
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +44,10 @@ const Home = () => {
          get(`/v2/list?page=${page}&limit=${limit}`)
          .then(res=>{
              console.log(res.data)
-             setImage(res.data)
+             const data1 = image
+             const data2 = res.data
+             const data3 = [...data1,...data2]
+             setImage(data3)
              setTimeout(()=>{
              setOpen(false)
              },2000)
@@ -57,14 +59,14 @@ const Home = () => {
          .catch(err=>{
              console.log(err)
          })
-    },[page,limit])
+    },[page])
   
     const loadMore = () => {
     
       const nextItem = page + 1 
-      const nextlimit = limit + 8
+    //   const nextlimit = limit + 8
         setPage(nextItem)
-        setLimit(nextlimit)
+        // setLimit(nextlimit)
         setOpen(true)
     };
   
