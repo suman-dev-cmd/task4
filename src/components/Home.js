@@ -5,7 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from '@material-ui/core/Backdrop';
-import {get} from '../utils/service'
+import {get} from '../utils/service';
+import Slider from './slider'
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -29,8 +30,8 @@ const Home = () => {
     const [spacing, setSpacing] = useState(8);
     const classes = useStyles();
     const [image,setImage] = useState([]);
-    // const [imageslice,setImageslice] = useState([]);
-    // const [offset, setOffset] = useState(0);
+    const [imageslice,setImageslice] = useState([]);
+    const [offset, setOffset] = useState(0);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(8);
     // const [loading, setLoading] = useState(false);
@@ -53,8 +54,8 @@ const Home = () => {
              },2000)
 
             //  setImagelenght(res.data.length)
-            //  const slice = res.data.slice(offset,offset+perpage)
-            //  setImageslice(slice)
+             const slice = res.data.slice(offset,offset+3)
+             setImageslice(slice)
          })
          .catch(err=>{
              console.log(err)
@@ -71,6 +72,8 @@ const Home = () => {
     };
   
     return (
+      <>
+      <Slider item={imageslice}/>
       <Grid container className={classes.root} spacing={10}>
         <Backdrop className={classes.backdrop} open={open} >
             <CircularProgress color="inherit" />
@@ -102,6 +105,7 @@ const Home = () => {
                 
        </Grid>
       </Grid>
+      </>
     );
 }
 

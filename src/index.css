@@ -14,4 +14,14 @@ code {
 
 .loadmore{
   padding: 2px !important;
+  margin-bottom: 19px !important;
+}
+
+.silder{
+  height:300px;
+  width: 100%;
+}
+.caro{
+  margin-left: 37px !important;
+  width: 100% !important;
 }
