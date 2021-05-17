@@ -30,51 +30,61 @@ const Home = () => {
     const [spacing, setSpacing] = useState(8);
     const classes = useStyles();
     const [image,setImage] = useState([]);
-    const [imageslice,setImageslice] = useState([]);
-    const [offset, setOffset] = useState(0);
+    const [banner,setBanner] = useState([]);
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(8);
-    // const [loading, setLoading] = useState(false);
-    // const [imagelength,setImagelenght] = useState(0)
     const [open, setOpen] = useState(true);
-
-
     useEffect(() => {   
-        console.log(page)
-        console.log(limit)
-         get(`/v2/list?page=${page}&limit=${limit}`)
+        get(`/v2/list?page=1&limit=3`)
+        .then(res=>{
+            setBanner(res.data)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+         get(`/v2/list?page=${page}&limit=8`)
          .then(res=>{
-             console.log(res.data)
              const data1 = image
+             console.log(data1)
              const data2 = res.data
              const data3 = [...data1,...data2]
              setImage(data3)
              setTimeout(()=>{
              setOpen(false)
              },2000)
-
-            //  setImagelenght(res.data.length)
-             const slice = res.data.slice(offset,offset+3)
-             setImageslice(slice)
          })
          .catch(err=>{
              console.log(err)
          })
+        
     },[page])
-  
-    const loadMore = () => {
+    window.onscroll = function() {
+      var d = document.documentElement;
+      var offset =document.documentElement.scrollTop + window.innerHeight;
+      var height = d.offsetHeight;
     
-      const nextItem = page + 1 
-    //   const nextlimit = limit + 8
-        setPage(nextItem)
-        // setLimit(nextlimit)
-        setOpen(true)
+      if (offset >= height) {
+        const nextItem = page + 1 
+        //   const nextlimit = limit + 8
+            setPage(nextItem)
+            // setLimit(nextlimit)
+            setOpen(true)
+      }
     };
+  
+    // const loadMore = () => {
+    
+    //   const nextItem = page + 1 
+    // //   const nextlimit = limit + 8
+    //     setPage(nextItem)
+    //     // setLimit(nextlimit)
+    //     setOpen(true)
+    // };
   
     return (
       <>
-      <Slider item={imageslice}/>
       <Grid container className={classes.root} spacing={10}>
+       <Slider item={banner}/>
+
         <Backdrop className={classes.backdrop} open={open} >
             <CircularProgress color="inherit" />
         </Backdrop>
@@ -96,11 +106,11 @@ const Home = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} className='loadmore'>
-                <center>
+                {/* <center>
                     <Button variant="contained" color="primary" onClick={loadMore}>
                         Load More
                     </Button>
-                </center>
+                </center> */}
             
                 
        </Grid>

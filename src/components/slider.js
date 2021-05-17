@@ -12,7 +12,10 @@ const Slider = ({item}) => {
            className='caro'
           >
             {
+              item.lenght !== 0?
                 item.map( (obj, i) => <img src={obj.download_url} className="silder"/> )
+              :
+              <p>No Image Slider</p>
             }
           </Carousel>  
         </>
